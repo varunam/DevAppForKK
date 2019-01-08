@@ -1,0 +1,132 @@
+{
+  "project_info": {
+    "project_number": "411372513569",
+    "firebase_url": "https://learnkannada-kannadakali.firebaseio.com",
+    "project_id": "learnkannada-kannadakali",
+    "storage_bucket": "learnkannada-kannadakali.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411372513569:android:576bc38d2020197f",
+        "android_client_info": {
+          "package_name": "app.learnkannada.com.learnkannadakannadakali"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411372513569-3h854c0lpre7hu8vblh0oe99dm6omec2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.learnkannada.com.learnkannadakannadakali",
+            "certificate_hash": "0cccb77b2b7421d427b4776fad6a2324858aec3d"
+          }
+        },
+        {
+          "client_id": "411372513569-t8q2c49jfs9auif19rn1t1cfj9cl0qlo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.learnkannada.com.learnkannadakannadakali",
+            "certificate_hash": "4845fa82e7ce2f218b97ffdaf091acf2e2581f6c"
+          }
+        },
+        {
+          "client_id": "411372513569-n8oj4dhl967ashbu1ib42r32ghscl75b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.learnkannada.com.learnkannadakannadakali",
+            "certificate_hash": "712e10097dd812ccb5e26d88a0907e223c74a0f3"
+          }
+        },
+        {
+          "client_id": "411372513569-51f9b2lmti51vu8drhsk0j5l7tp8rtum.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.learnkannada.com.learnkannadakannadakali",
+            "certificate_hash": "0e8de727d486e0bd0f13932fcb06b8818078bd70"
+          }
+        },
+        {
+          "client_id": "411372513569-pm3ers4gu2uncmm1ivrceq43r18k6tug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.learnkannada.com.learnkannadakannadakali",
+            "certificate_hash": "3c47f7bd8d1299426e198d7df632800b77b5f8fd"
+          }
+        },
+        {
+          "client_id": "411372513569-1hcf428tlcre1392tmc0g3fn3vp69otn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHlXh3iKva4pJEk6KIj3npDvnJN46oi4E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411372513569-6qpipi761ueni6bakdr7ennvrkbdall9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-4166512729354408~7113453901"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411372513569:android:b6eb1503b17bd9ca",
+        "android_client_info": {
+          "package_name": "com.kannadakali.developerapp.app.devappforkk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411372513569-cboqvkgeg15i5l6lsj6mi79nu1ckl4pj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kannadakali.developerapp.app.devappforkk",
+            "certificate_hash": "0e8de727d486e0bd0f13932fcb06b8818078bd70"
+          }
+        },
+        {
+          "client_id": "411372513569-1hcf428tlcre1392tmc0g3fn3vp69otn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHlXh3iKva4pJEk6KIj3npDvnJN46oi4E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411372513569-6qpipi761ueni6bakdr7ennvrkbdall9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

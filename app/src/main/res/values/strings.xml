@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DevAppForKK</string>
+    <string name="movies">Movies</string>
+    <string name="featured_videos">Featured Videos</string>
+    <string name="comedy_scenes">Comedy Scenes</string>
+    <string name="latest_trailers">Latest Trailers</string>
+    <string name="short_movies">Short Movies</string>
+    <string name="songs">Songs</string>
+    <string name="title">Title</string>
+</resources>
