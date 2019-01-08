@@ -1,5 +1,6 @@
 package com.kannadakali.developerapp.app.devappforkk.views.activity
 
+import android.app.ProgressDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -32,12 +33,22 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
     private var shortMoviesList: ArrayList<SimpleVideo>? = null
     private var trailersList: ArrayList<SimpleVideo>? = null
 
+    private var progressDialog: ProgressDialog? = null
+
+    private var featuredVideosLoaded = false
+    private var moviesLoaded = false
+    private var comedyLoaded = false
+    private var songsLoaded = false
+    private var shortMoviesLoaded = false
+    private var trailersLoaded = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         init()
         launchHomeFragment()
+        showLoader("loading data...")
 
         FirebaseAuth.getInstance()
             .signInAnonymously()
@@ -61,36 +72,50 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
         entertainmentContentProvider = EntertainmentContentProvider(this)
         entertainmentViewModel = ViewModelProviders.of(this).get(EntertainmentViewModel::class.java)
         entertainmentViewModel!!.entertainmentClicked.observe(this, entertainmentClickObserver)
+
+        progressDialog = ProgressDialog(this)
     }
 
     override fun onFeaturedVideosLoaded(featuredVideos: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setFeaturedVideos(featuredVideos)
         featuredVideosList = featuredVideos
+        featuredVideosLoaded = true
+        checkDataLoadedAndDismissLoader()
     }
 
     override fun onTopMoviesLoaded(topmovies: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setTopMoviesList(topmovies)
         moviesList = topmovies
+        moviesLoaded = true
+        checkDataLoadedAndDismissLoader()
     }
 
     override fun onTopComedyLoaded(topComedyScenes: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setTopComediesList(topComedyScenes)
         comedyScenesList = topComedyScenes
+        comedyLoaded = true
+        checkDataLoadedAndDismissLoader()
     }
 
     override fun onTopSongsLoaded(topSongs: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setTopSongsList(topSongs)
         songsList = topSongs
+        songsLoaded = true
+        checkDataLoadedAndDismissLoader()
     }
 
     override fun onLatestTrailersLoaded(latestTrailers: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setLatestTrailersList(latestTrailers)
         trailersList = latestTrailers
+        trailersLoaded = true
+        checkDataLoadedAndDismissLoader()
     }
 
     override fun onTopShortMoviesLoaded(shortMovies: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setTopShortMoviesList(shortMovies)
         shortMoviesList = shortMovies
+        shortMoviesLoaded = true
+        checkDataLoadedAndDismissLoader()
     }
 
     private val entertainmentClickObserver =
@@ -111,8 +136,21 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
         entertainmentListFragment = EntertainmentListFragment.newInstance(videosList)
         supportFragmentManager.beginTransaction()
             .replace(R.id.full_screen_container_id, entertainmentListFragment!!)
+            .addToBackStack(null)
             .commit()
     }
 
+    private fun showLoader(s: String) {
+        progressDialog!!.setMessage(s)
+        progressDialog!!.setCancelable(false)
+        progressDialog!!.show()
+    }
+
+    private fun checkDataLoadedAndDismissLoader() {
+        if (featuredVideosLoaded && comedyLoaded && songsLoaded && trailersLoaded && shortMoviesLoaded && moviesLoaded) {
+            if (progressDialog!!.isShowing)
+                progressDialog!!.dismiss()
+        }
+    }
 
 }
