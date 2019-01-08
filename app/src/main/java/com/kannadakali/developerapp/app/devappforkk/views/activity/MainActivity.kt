@@ -5,19 +5,32 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.kannadakali.developerapp.app.devappforkk.R
+import com.kannadakali.developerapp.app.devappforkk.ThisApplication
 import com.kannadakali.developerapp.app.devappforkk.data.firebase.EntertainmentContentProvider
 import com.kannadakali.developerapp.app.devappforkk.data.firebase.EntertainmentLoadedCallbacks
 import com.kannadakali.developerapp.app.devappforkk.data.model.SimpleVideo
+import com.kannadakali.developerapp.app.devappforkk.enums.EntertainmentType
 import com.kannadakali.developerapp.app.devappforkk.viewmodel.EntertainmentViewModel
 import com.kannadakali.developerapp.app.devappforkk.views.fragments.EntertainmentHomeFragment
+import com.kannadakali.developerapp.app.devappforkk.views.fragments.EntertainmentListFragment
 
 class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
 
     private var entertainmentContentProvider: EntertainmentContentProvider? = null
     private var entertainmentViewModel: EntertainmentViewModel? = null
+
     private var entertainmentHomeFragment: EntertainmentHomeFragment? = null
+    private var entertainmentListFragment: EntertainmentListFragment? = null
+
+    private var featuredVideosList: ArrayList<SimpleVideo>? = null
+    private var moviesList: ArrayList<SimpleVideo>? = null
+    private var comedyScenesList: ArrayList<SimpleVideo>? = null
+    private var songsList: ArrayList<SimpleVideo>? = null
+    private var shortMoviesList: ArrayList<SimpleVideo>? = null
+    private var trailersList: ArrayList<SimpleVideo>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +44,13 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
             .addOnSuccessListener {
                 entertainmentContentProvider!!.loadEntertainmentPack()
             }
-            .addOnFailureListener{
-                Log.e("data","Failed to extract data: " + it.message)
+            .addOnFailureListener {
+                Log.e("data", "Failed to extract data: " + it.message)
             }
     }
 
     private fun launchHomeFragment() {
-        if(entertainmentHomeFragment==null)
+        if (entertainmentHomeFragment == null)
             entertainmentHomeFragment = EntertainmentHomeFragment.newInstance()
         supportFragmentManager.beginTransaction()
             .replace(R.id.full_screen_container_id, entertainmentHomeFragment!!)
@@ -47,36 +60,59 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
     private fun init() {
         entertainmentContentProvider = EntertainmentContentProvider(this)
         entertainmentViewModel = ViewModelProviders.of(this).get(EntertainmentViewModel::class.java)
-        entertainmentViewModel!!.topMoviesList.observe(this, topMoviesObserver)
+        entertainmentViewModel!!.entertainmentClicked.observe(this, entertainmentClickObserver)
     }
 
     override fun onFeaturedVideosLoaded(featuredVideos: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setFeaturedVideos(featuredVideos)
+        featuredVideosList = featuredVideos
     }
 
     override fun onTopMoviesLoaded(topmovies: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setTopMoviesList(topmovies)
+        moviesList = topmovies
     }
 
     override fun onTopComedyLoaded(topComedyScenes: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setTopComediesList(topComedyScenes)
+        comedyScenesList = topComedyScenes
     }
 
     override fun onTopSongsLoaded(topSongs: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setTopSongsList(topSongs)
+        songsList = topSongs
     }
 
     override fun onLatestTrailersLoaded(latestTrailers: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setLatestTrailersList(latestTrailers)
+        trailersList = latestTrailers
     }
 
     override fun onTopShortMoviesLoaded(shortMovies: ArrayList<SimpleVideo>?) {
         entertainmentViewModel!!.setTopShortMoviesList(shortMovies)
+        shortMoviesList = shortMovies
     }
 
-    private val topMoviesObserver =
-        Observer<ArrayList<SimpleVideo>> {
-            Log.e("data", it!![0].title)
+    private val entertainmentClickObserver =
+        Observer<EntertainmentType> {
+            when (it) {
+                EntertainmentType.COMEDY -> launchListFragment(comedyScenesList!!)
+                EntertainmentType.SONGS -> launchListFragment(songsList!!)
+                EntertainmentType.SHORT_MOVIES -> launchListFragment(shortMoviesList!!)
+                EntertainmentType.FEATURED -> launchListFragment(featuredVideosList!!)
+                EntertainmentType.TRAILERS -> launchListFragment(trailersList!!)
+                EntertainmentType.MOVIE -> launchListFragment(moviesList!!)
+                else ->
+                    Toast.makeText(ThisApplication.getContext(), "Not available", Toast.LENGTH_LONG).show()
+            }
         }
+
+    private fun launchListFragment(videosList: ArrayList<SimpleVideo>) {
+        entertainmentListFragment = EntertainmentListFragment.newInstance(videosList)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.full_screen_container_id, entertainmentListFragment!!)
+            .commit()
+    }
+
 
 }

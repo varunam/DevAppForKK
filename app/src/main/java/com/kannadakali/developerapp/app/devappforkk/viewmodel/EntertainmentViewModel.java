@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import com.kannadakali.developerapp.app.devappforkk.data.model.SimpleVideo;
+import com.kannadakali.developerapp.app.devappforkk.enums.EntertainmentType;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,10 @@ public class EntertainmentViewModel extends AndroidViewModel {
     private MutableLiveData<ArrayList<SimpleVideo>> topSongsList = new MutableLiveData<>();
     private MutableLiveData<ArrayList<SimpleVideo>> topComediesList = new MutableLiveData<>();
     private MutableLiveData<ArrayList<SimpleVideo>> topShortMoviesList = new MutableLiveData<>();
+
+    private MutableLiveData<EntertainmentType> entertainmentClicked = new MutableLiveData<>();
+
+
     
     public EntertainmentViewModel(@NonNull Application application) {
         super(application);
@@ -79,5 +84,13 @@ public class EntertainmentViewModel extends AndroidViewModel {
     
     public MutableLiveData<ArrayList<SimpleVideo>> getTopComediesList() {
         return topComediesList;
+    }
+
+    public MutableLiveData<EntertainmentType> getEntertainmentClicked() {
+        return entertainmentClicked;
+    }
+
+    public void setEntertainmentClicked(EntertainmentType entertainmentClicked) {
+        this.entertainmentClicked.postValue(entertainmentClicked);
     }
 }

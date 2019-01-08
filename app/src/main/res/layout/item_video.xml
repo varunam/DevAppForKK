@@ -2,21 +2,68 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.CardView
+            app:cardElevation="5dp"
+            app:cardUseCompatPadding="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <RelativeLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
 
             <TextView
+                    android:id="@+id/video_item_title_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/title"
+                    android:fontFamily="@font/muli_extrabold"/>
+
+            <TextView
+                    android:id="@+id/video_item_views_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/views"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/video_item_title_id"
+                    android:fontFamily="@font/muli_semibold"/>
+
+            <TextView
+                    android:id="@+id/video_item_sort_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sort_count"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/video_item_views_id"
+                    android:fontFamily="@font/muli_semibold"/>
+
+            <TextView
+                    android:id="@+id/video_item_video_type_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/title"/>
+                    android:text="@string/video_type"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/video_item_sort_id"
+                    android:fontFamily="@font/muli_semibold"/>
+
+            <TextView
+                    android:id="@+id/video_item_id_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/video_url"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/video_item_video_type_id"
+                    android:fontFamily="@font/muli_semibold"/>
+
 
         </RelativeLayout>
 

@@ -1,13 +1,15 @@
 package com.kannadakali.developerapp.app.devappforkk.data.model;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.kannadakali.developerapp.app.devappforkk.enums.VideoType;
 import com.kannadakali.developerapp.app.devappforkk.youtube.Youtube;
 
 /**
  * Created by varun.am on 26/12/18
  */
-public class SimpleVideo {
+public class SimpleVideo implements Parcelable {
     private int id_;
     private String id;
     private String title;
@@ -46,7 +48,29 @@ public class SimpleVideo {
         this.sort_count = 10;
         this.votes = 0;
     }
-    
+
+    protected SimpleVideo(Parcel in) {
+        id_ = in.readInt();
+        id = in.readString();
+        title = in.readString();
+        thumbnail_url = in.readString();
+        video_type = in.readString();
+        votes = in.readLong();
+        sort_count = in.readLong();
+    }
+
+    public static final Creator<SimpleVideo> CREATOR = new Creator<SimpleVideo>() {
+        @Override
+        public SimpleVideo createFromParcel(Parcel in) {
+            return new SimpleVideo(in);
+        }
+
+        @Override
+        public SimpleVideo[] newArray(int size) {
+            return new SimpleVideo[size];
+        }
+    };
+
     public String getId() {
         return id;
     }
@@ -113,5 +137,21 @@ public class SimpleVideo {
     
     public void setId_(int id_) {
         this.id_ = id_;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id_);
+        parcel.writeString(id);
+        parcel.writeString(title);
+        parcel.writeString(thumbnail_url);
+        parcel.writeString(video_type);
+        parcel.writeLong(votes);
+        parcel.writeLong(sort_count);
     }
 }
