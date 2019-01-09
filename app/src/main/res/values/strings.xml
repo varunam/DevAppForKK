@@ -7,9 +7,13 @@
     <string name="short_movies">Short Movies</string>
     <string name="songs">Songs</string>
     <string name="title">Title</string>
-    <string name="views">views:</string>
-    <string name="sort_count">sort count:</string>
-    <string name="video_type">video type:</string>
-    <string name="video_url"><u>video url:</u></string>
+    <string name="views">Views</string>
+    <string name="sort_count">Sort Count</string>
+    <string name="video_type">Video Type</string>
+    <string name="video_url"><u>Video Url</u></string>
     <string name="add">Add</string>
+    <string name="thumbnail_url">Thumbnail Url</string>
+    <string name="youtube">Youtube</string>
+    <string name="others">Others</string>
+    <string name="id_or_url">Youtube Id or Url</string>
 </resources>

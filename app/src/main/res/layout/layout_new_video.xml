@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:id="@+id/title_et_id"
+                android:hint="@string/title"
+                android:textAlignment="center"
+                android:fontFamily="@font/muli_semibold"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <RadioGroup
+            android:id="@+id/video_type_radio_group_id"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <RadioButton
+                android:id="@+id/video_type_youtube_id"
+                android:text="@string/youtube"
+                android:fontFamily="@font/muli_semibold"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <RadioButton
+                android:id="@+id/video_type_others_id"
+                android:text="@string/others"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/muli_semibold"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </RadioGroup>
+
+
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:id="@+id/video_url_et_id"
+                android:hint="@string/id_or_url"
+                android:fontFamily="@font/muli_semibold"
+                android:textAlignment="center"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:id="@+id/thumbnail_url_et_id"
+                android:hint="@string/thumbnail_url"
+                android:fontFamily="@font/muli_semibold"
+                android:textAlignment="center"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:id="@+id/views_et_id"
+                android:hint="@string/views"
+                android:textAlignment="center"
+                android:inputType="numberSigned"
+                android:fontFamily="@font/muli_semibold"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:id="@+id/sort_count_et_id"
+                android:hint="@string/sort_count"
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:fontFamily="@font/muli_semibold"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+            android:id="@+id/add_video_dialg_button_id"
+            android:text="@string/add"
+            android:layout_margin="12dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:fontFamily="@font/muli_extrabold"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+</LinearLayout>
