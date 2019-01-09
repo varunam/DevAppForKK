@@ -6,6 +6,7 @@ import com.google.firebase.database.*;
 import com.kannadakali.developerapp.app.devappforkk.data.model.SimpleVideo;
 import com.kannadakali.developerapp.app.devappforkk.enums.EntertainmentType;
 import com.kannadakali.developerapp.app.devappforkk.enums.VideoType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -254,13 +255,33 @@ public class EntertainmentContentProvider {
         databaseReference = getDatabaseReferenceFor(entertainmentType);
         DatabaseReference videoReference;
         if (databaseReference != null) {
-            videoReference = databaseReference.child(simpleVideo.getId());
+            videoReference = databaseReference.child(getJsonObjectParentFor(simpleVideo));
             videoReference.child("title").setValue(simpleVideo.getTitle());
             videoReference.child("video_type").setValue(simpleVideo.getVideo_type());
             videoReference.child("votes").setValue(simpleVideo.getVotes());
             videoReference.child("id").setValue(simpleVideo.getId());
             videoReference.child("sort_count").setValue(simpleVideo.getSort_count());
             videoReference.child("thumbnail_url").setValue(simpleVideo.getThumbnail_url());
+        }
+    }
+
+    public void removeVieo(EntertainmentType entertainmentType, @NotNull final SimpleVideo simpleVideo) {
+        databaseReference = getDatabaseReferenceFor(entertainmentType);
+        if (databaseReference != null) {
+            databaseReference.child(getJsonObjectParentFor(simpleVideo))
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getKey() != null)
+                                if (dataSnapshot.getKey().equals(getJsonObjectParentFor(simpleVideo)))
+                                    dataSnapshot.getRef().removeValue();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
         }
     }
 

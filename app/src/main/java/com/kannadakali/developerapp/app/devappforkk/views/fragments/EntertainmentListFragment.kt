@@ -1,5 +1,6 @@
 package com.kannadakali.developerapp.app.devappforkk.views.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
@@ -20,17 +21,19 @@ import com.kannadakali.developerapp.app.devappforkk.data.firebase.EntertainmentC
 import com.kannadakali.developerapp.app.devappforkk.data.model.SimpleVideo
 import com.kannadakali.developerapp.app.devappforkk.enums.EntertainmentType
 import com.kannadakali.developerapp.app.devappforkk.enums.VideoType
+import com.kannadakali.developerapp.app.devappforkk.interfaces.VideoClickCallbacks
 
 /**
  * Created by varun.am on 08/01/19
  */
-class EntertainmentListFragment : Fragment(), View.OnClickListener {
+class EntertainmentListFragment : Fragment(), View.OnClickListener, VideoClickCallbacks {
 
     private var recyclerView: RecyclerView? = null
     private var videosAdapter: VideosAdapter? = null
     private var addVideo: Button? = null
     private var entertainmentContentProvider: EntertainmentContentProvider? = null
     private var videosList: ArrayList<SimpleVideo>? = null
+    private var entertainmentType: EntertainmentType? = null
 
     companion object {
         public var VIDEOS_KEY = "videos-key"
@@ -63,11 +66,12 @@ class EntertainmentListFragment : Fragment(), View.OnClickListener {
     private fun init(view: View) {
         addVideo = view.findViewById(R.id.add_video_button_id)
         addVideo!!.setOnClickListener(this)
+        entertainmentType = arguments!!.getSerializable(ENTERTAINMENT_KEY) as EntertainmentType?
 
         entertainmentContentProvider = EntertainmentContentProvider(null)
 
         recyclerView = view.findViewById(R.id.recycler_view_id)
-        videosAdapter = VideosAdapter()
+        videosAdapter = VideosAdapter(this)
         recyclerView!!.layoutManager = LinearLayoutManager(ThisApplication.getContext())
         recyclerView!!.adapter = videosAdapter
 
@@ -99,7 +103,7 @@ class EntertainmentListFragment : Fragment(), View.OnClickListener {
         val radioGroup = view.findViewById<RadioGroup>(R.id.video_type_radio_group_id)
         val addVideoButton = view.findViewById<Button>(R.id.add_video_dialg_button_id)
 
-        sortCountEt.setText((videosList!![videosList!!.size-1].sort_count + 1).toString())
+        sortCountEt.setText((videosList!![videosList!!.size - 1].sort_count + 1).toString())
 
         addVideoButton.setOnClickListener {
             val title = titleEt.text.toString()
@@ -144,7 +148,7 @@ class EntertainmentListFragment : Fragment(), View.OnClickListener {
                 newVideo.sort_count = sortCountLong
 
                 entertainmentContentProvider!!.addVideo(
-                    arguments!!.getSerializable(ENTERTAINMENT_KEY) as EntertainmentType?,
+                    entertainmentType,
                     newVideo
                 )
 
@@ -152,5 +156,19 @@ class EntertainmentListFragment : Fragment(), View.OnClickListener {
             }
         }
         alertDialog.show()
+    }
+
+    override fun onVideoLongClicked(simpleVideo: SimpleVideo) {
+        AlertDialog.Builder(activity!!)
+            .setTitle("Delete video?")
+            .setMessage("Are you sure to delete this video from database? \n\nNote: This will delete video from production environment!")
+            .setCancelable(false)
+            .setPositiveButton("Yes", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    entertainmentContentProvider!!.removeVieo(entertainmentType, simpleVideo)
+                }
+            })
+            .setNegativeButton("cancel", null)
+            .create().show()
     }
 }

@@ -2,6 +2,7 @@ package com.kannadakali.developerapp.app.devappforkk.adapters
 
 import android.content.Intent
 import android.net.Uri
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.TextView
 import com.kannadakali.developerapp.app.devappforkk.R
 import com.kannadakali.developerapp.app.devappforkk.data.model.SimpleVideo
 import com.kannadakali.developerapp.app.devappforkk.enums.VideoType
+import com.kannadakali.developerapp.app.devappforkk.interfaces.VideoClickCallbacks
 import com.kannadakali.developerapp.app.devappforkk.youtube.Youtube
 
 
@@ -17,9 +19,14 @@ import com.kannadakali.developerapp.app.devappforkk.youtube.Youtube
  * Created by varun.am on 08/01/19
  */
 
-class VideosAdapter : RecyclerView.Adapter<VideosAdapter.ViewHolder>() {
+class VideosAdapter(videoClickCallbacks: VideoClickCallbacks) : RecyclerView.Adapter<VideosAdapter.ViewHolder>() {
 
     private var videosList: ArrayList<SimpleVideo>? = null
+    private var videoClickCallbacks: VideoClickCallbacks? = null
+
+    init {
+        this.videoClickCallbacks = videoClickCallbacks
+    }
 
     public fun setVideos(videosList: ArrayList<SimpleVideo>) {
         this.videosList = videosList
@@ -33,10 +40,10 @@ class VideosAdapter : RecyclerView.Adapter<VideosAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        if (videosList == null)
-            return 0
+        return if (videosList == null)
+            0
         else
-            return videosList!!.size
+            videosList!!.size
     }
 
     override fun onBindViewHolder(viewholder: VideosAdapter.ViewHolder, position: Int) {
@@ -58,9 +65,20 @@ class VideosAdapter : RecyclerView.Adapter<VideosAdapter.ViewHolder>() {
             i.data = Uri.parse(videoUrl)
             viewholder.title.context.startActivity(i)
         }
+
+        viewholder.card.setOnLongClickListener {
+            videoLongClicked(video)
+        }
+
+    }
+
+    private fun videoLongClicked(video: SimpleVideo): Boolean {
+        videoClickCallbacks!!.onVideoLongClicked(video)
+        return true
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        public var card = itemView.findViewById<CardView>(R.id.video_item_card_id)
         public var title = itemView.findViewById<TextView>(R.id.video_item_title_id)
         public var votes = itemView.findViewById<TextView>(R.id.video_item_views_id)
         public var video_type = itemView.findViewById<TextView>(R.id.video_item_video_type_id)
