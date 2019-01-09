@@ -1,6 +1,5 @@
 package com.kannadakali.developerapp.app.devappforkk.views.fragments
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
@@ -10,10 +9,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import com.kannadakali.developerapp.app.devappforkk.R
 import com.kannadakali.developerapp.app.devappforkk.ThisApplication
 import com.kannadakali.developerapp.app.devappforkk.adapters.VideosAdapter
@@ -148,6 +144,7 @@ class EntertainmentListFragment : Fragment(), View.OnClickListener, VideoClickCa
                 newVideo.sort_count = sortCountLong
 
                 entertainmentContentProvider!!.addVideo(
+                    context,
                     entertainmentType,
                     newVideo
                 )
@@ -158,18 +155,99 @@ class EntertainmentListFragment : Fragment(), View.OnClickListener, VideoClickCa
         alertDialog.show()
     }
 
-    override fun onVideoLongClicked(simpleVideo: SimpleVideo) {
+    override fun onDeleteVideoClicked(simpleVideo: SimpleVideo) {
         AlertDialog.Builder(activity!!)
             .setTitle("Delete video?")
             .setIcon(R.drawable.error_red_icon)
             .setMessage("Are you sure to delete this video from database? \n\nNote: This will delete video from production environment!")
             .setCancelable(false)
-            .setPositiveButton("Yes", object : DialogInterface.OnClickListener {
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    entertainmentContentProvider!!.removeVieo(entertainmentType, simpleVideo)
-                }
-            })
+            .setPositiveButton(
+                "Yes"
+            ) { p0, p1 -> entertainmentContentProvider!!.removeVieo(context, entertainmentType, simpleVideo) }
             .setNegativeButton("cancel", null)
             .create().show()
+    }
+
+    override fun onEditClicked(simpleVideo: SimpleVideo) {
+        val builder = AlertDialog.Builder(activity!!)
+        val view = LayoutInflater.from(context).inflate(R.layout.layout_new_video, null, false)
+        builder.setView(view)
+
+        val alertDialog = builder.create()
+
+        val titleEt = view.findViewById<EditText>(R.id.title_et_id)
+        val videoIdEt = view.findViewById<EditText>(R.id.video_url_et_id)
+        val thumbnailUrlEt = view.findViewById<EditText>(R.id.thumbnail_url_et_id)
+        val sortCountEt = view.findViewById<EditText>(R.id.sort_count_et_id)
+        val viewsEt = view.findViewById<EditText>(R.id.views_et_id)
+        val radioGroup = view.findViewById<RadioGroup>(R.id.video_type_radio_group_id)
+        val addVideoButton = view.findViewById<Button>(R.id.add_video_dialg_button_id)
+        val youtubeRadioButton = view.findViewById<RadioButton>(R.id.video_type_youtube_id)
+        val othersRadioButton = view.findViewById<RadioButton>(R.id.video_type_others_id)
+
+        titleEt.setText(simpleVideo.title)
+        thumbnailUrlEt.setText(simpleVideo.thumbnail_url)
+        sortCountEt.setText(simpleVideo.sort_count.toString())
+        viewsEt.setText(simpleVideo.votes.toString())
+        sortCountEt.setText(simpleVideo.sort_count.toString())
+        videoIdEt.setText(simpleVideo.id)
+        if (simpleVideo.video_type.equals(VideoType.YOUTUBE.videoType))
+            youtubeRadioButton.isChecked = true
+        else
+            othersRadioButton.isChecked = true
+        addVideoButton.text = "update"
+
+        addVideoButton.setOnClickListener {
+            val title = titleEt.text.toString()
+            val videoId = videoIdEt.text.toString()
+            val thumbnailUrl = thumbnailUrlEt.text.toString()
+            val sortCountText = sortCountEt.text.toString()
+            val viewsText = viewsEt.text.toString()
+            val buttonId = radioGroup.checkedRadioButtonId
+            var videoTypeText = ""
+            videoTypeText = if (buttonId == R.id.video_type_youtube_id)
+                VideoType.YOUTUBE.videoType
+            else
+                VideoType.OTHERS.videoType
+
+            if (TextUtils.isEmpty(title)) {
+                titleEt.error = "required field"
+                titleEt.requestFocus()
+            } else if (buttonId < 0) {
+                Toast.makeText(ThisApplication.getContext(), "Please select videoType", Toast.LENGTH_LONG).show()
+            } else if (TextUtils.isEmpty(videoId)) {
+                videoIdEt.error = "required field"
+                videoIdEt.requestFocus()
+            } else if (TextUtils.isEmpty(viewsText)) {
+                viewsEt.error = "required field"
+                viewsEt.requestFocus()
+            } else if (TextUtils.isEmpty(thumbnailUrl)) {
+                thumbnailUrlEt.error = "required field"
+                thumbnailUrlEt.requestFocus()
+            } else if (TextUtils.isEmpty(sortCountText)) {
+                sortCountEt.error = "required field"
+                sortCountEt.requestFocus()
+            } else {
+                val sortCountLong = sortCountText.toLong()
+                val viewsCount = viewsText.toLong()
+
+                val newVideo = SimpleVideo()
+                newVideo.title = title
+                newVideo.video_type = videoTypeText
+                newVideo.id = videoId
+                newVideo.thumbnail_url = thumbnailUrl
+                newVideo.votes = viewsCount
+                newVideo.sort_count = sortCountLong
+
+                entertainmentContentProvider!!.updateVideo(
+                    context,
+                    entertainmentType,
+                    newVideo
+                )
+
+                alertDialog.dismiss()
+            }
+        }
+        alertDialog.show()
     }
 }

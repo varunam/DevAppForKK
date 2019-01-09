@@ -21,7 +21,7 @@
 
             <TextView
                     android:id="@+id/video_item_title_id"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -70,6 +70,30 @@
                     android:layout_marginStart="10dp"
                     android:layout_below="@id/video_item_video_type_id"
                     android:fontFamily="@font/muli_semibold"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/video_item_id_id"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/video_item_edit_id"
+                        android:src="@drawable/edit_icon"
+                        android:padding="7dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+
+                <ImageView
+                        android:id="@+id/video_item_delete_id"
+                        android:src="@drawable/ic_delete_forever_black_24dp"
+                        android:padding="7dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+
+            </LinearLayout>
 
 
         </RelativeLayout>

@@ -1,7 +1,9 @@
 package com.kannadakali.developerapp.app.devappforkk.data.firebase;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 import com.google.firebase.database.*;
 import com.kannadakali.developerapp.app.devappforkk.data.model.SimpleVideo;
 import com.kannadakali.developerapp.app.devappforkk.enums.EntertainmentType;
@@ -251,7 +253,7 @@ public class EntertainmentContentProvider {
         });
     }
 
-    public void addVideo(EntertainmentType entertainmentType, SimpleVideo simpleVideo) {
+    public void addVideo(Context context, EntertainmentType entertainmentType, SimpleVideo simpleVideo) {
         databaseReference = getDatabaseReferenceFor(entertainmentType);
         DatabaseReference videoReference;
         if (databaseReference != null) {
@@ -262,10 +264,26 @@ public class EntertainmentContentProvider {
             videoReference.child("id").setValue(simpleVideo.getId());
             videoReference.child("sort_count").setValue(simpleVideo.getSort_count());
             videoReference.child("thumbnail_url").setValue(simpleVideo.getThumbnail_url());
+            Toast.makeText(context, "Video added successfully!", Toast.LENGTH_LONG).show();
         }
     }
 
-    public void removeVieo(EntertainmentType entertainmentType, @NotNull final SimpleVideo simpleVideo) {
+    public void updateVideo(Context context, EntertainmentType entertainmentType, SimpleVideo simpleVideo) {
+        databaseReference = getDatabaseReferenceFor(entertainmentType);
+        DatabaseReference videoReference;
+        if (databaseReference != null) {
+            videoReference = databaseReference.child(getJsonObjectParentFor(simpleVideo));
+            videoReference.child("title").setValue(simpleVideo.getTitle());
+            videoReference.child("video_type").setValue(simpleVideo.getVideo_type());
+            videoReference.child("votes").setValue(simpleVideo.getVotes());
+            videoReference.child("id").setValue(simpleVideo.getId());
+            videoReference.child("sort_count").setValue(simpleVideo.getSort_count());
+            videoReference.child("thumbnail_url").setValue(simpleVideo.getThumbnail_url());
+            Toast.makeText(context, "Video updated successfully!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void removeVieo(final Context context, EntertainmentType entertainmentType, @NotNull final SimpleVideo simpleVideo) {
         databaseReference = getDatabaseReferenceFor(entertainmentType);
         if (databaseReference != null) {
             databaseReference.child(getJsonObjectParentFor(simpleVideo))
@@ -274,7 +292,10 @@ public class EntertainmentContentProvider {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getKey() != null)
                                 if (dataSnapshot.getKey().equals(getJsonObjectParentFor(simpleVideo)))
+                                {
                                     dataSnapshot.getRef().removeValue();
+                                    Toast.makeText(context, "Video deleted successfully!", Toast.LENGTH_LONG).show();
+                                }
                         }
 
                         @Override

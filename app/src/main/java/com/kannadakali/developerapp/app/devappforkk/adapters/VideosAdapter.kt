@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.kannadakali.developerapp.app.devappforkk.R
 import com.kannadakali.developerapp.app.devappforkk.data.model.SimpleVideo
@@ -66,15 +67,14 @@ class VideosAdapter(videoClickCallbacks: VideoClickCallbacks) : RecyclerView.Ada
             viewholder.title.context.startActivity(i)
         }
 
-        viewholder.card.setOnLongClickListener {
-            videoLongClicked(video)
+        viewholder.delete.setOnClickListener{
+            videoClickCallbacks!!.onDeleteVideoClicked(video)
         }
 
-    }
+        viewholder.edit.setOnClickListener{
+            videoClickCallbacks!!.onEditClicked(video)
+        }
 
-    private fun videoLongClicked(video: SimpleVideo): Boolean {
-        videoClickCallbacks!!.onVideoLongClicked(video)
-        return true
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -84,6 +84,8 @@ class VideosAdapter(videoClickCallbacks: VideoClickCallbacks) : RecyclerView.Ada
         public var video_type = itemView.findViewById<TextView>(R.id.video_item_video_type_id)
         public var sort_count = itemView.findViewById<TextView>(R.id.video_item_sort_id)
         public var video_url = itemView.findViewById<TextView>(R.id.video_item_id_id)
+        public var edit = itemView.findViewById<ImageView>(R.id.video_item_edit_id)
+        public var delete = itemView.findViewById<ImageView>(R.id.video_item_delete_id)
     }
 
 }

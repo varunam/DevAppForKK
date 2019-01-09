@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
             entertainmentHomeFragment = EntertainmentHomeFragment.newInstance()
         supportFragmentManager.beginTransaction()
             .replace(R.id.full_screen_container_id, entertainmentHomeFragment!!)
+            .setCustomAnimations(R.anim.from_bottom, R.anim.exit_to_top, R.anim.from_bottom, R.anim.exit_to_top)
             .commit()
     }
 
@@ -138,6 +139,7 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
         entertainmentListFragment = EntertainmentListFragment.newInstance(entertainmentType, videosList)
         supportFragmentManager.beginTransaction()
             .replace(R.id.full_screen_container_id, entertainmentListFragment!!)
+            .setCustomAnimations(R.anim.from_bottom, R.anim.exit_to_top, R.anim.from_bottom, R.anim.exit_to_top)
             .addToBackStack(null)
             .commit()
     }
