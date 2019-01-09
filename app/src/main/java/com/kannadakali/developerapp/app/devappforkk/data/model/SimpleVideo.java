@@ -10,7 +10,6 @@ import com.kannadakali.developerapp.app.devappforkk.youtube.Youtube;
  * Created by varun.am on 26/12/18
  */
 public class SimpleVideo implements Parcelable {
-    private int id_;
     private String id;
     private String title;
     private String thumbnail_url;
@@ -20,15 +19,6 @@ public class SimpleVideo implements Parcelable {
 
     //required for firebase. DON'T DELETE
     public SimpleVideo() {
-    }
-    
-    public SimpleVideo(int id_, String title, String thumbnail_url, String video_type, long votes, long sort_count) {
-        this.id_ = id_;
-        this.title = title;
-        this.thumbnail_url = thumbnail_url;
-        this.video_type = video_type;
-        this.votes = votes;
-        this.sort_count = sort_count;
     }
 
     public SimpleVideo(String youtubeVideoId, String title) {
@@ -50,7 +40,6 @@ public class SimpleVideo implements Parcelable {
     }
 
     protected SimpleVideo(Parcel in) {
-        id_ = in.readInt();
         id = in.readString();
         title = in.readString();
         thumbnail_url = in.readString();
@@ -130,14 +119,6 @@ public class SimpleVideo implements Parcelable {
     public void setSort_count(long sort_count) {
         this.sort_count = sort_count;
     }
-    
-    public int getId_() {
-        return id_;
-    }
-    
-    public void setId_(int id_) {
-        this.id_ = id_;
-    }
 
     @Override
     public int describeContents() {
@@ -146,7 +127,6 @@ public class SimpleVideo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id_);
         parcel.writeString(id);
         parcel.writeString(title);
         parcel.writeString(thumbnail_url);

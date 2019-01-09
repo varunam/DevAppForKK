@@ -2,8 +2,6 @@ package com.kannadakali.developerapp.app.devappforkk.data.firebase;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.*;
 import com.kannadakali.developerapp.app.devappforkk.data.model.SimpleVideo;
 import com.kannadakali.developerapp.app.devappforkk.enums.EntertainmentType;
@@ -15,9 +13,9 @@ import java.util.ArrayList;
  * Created by varun.am on 27/12/18
  */
 public class EntertainmentContentProvider {
-    
+
     private static final String TAG = EntertainmentContentProvider.class.getSimpleName();
-    
+
     private static final String FEATURED = "featured";
     private static final String MOVIES = "movies";
     private static final String ENTERTAINMENT = "entertainment";
@@ -28,17 +26,17 @@ public class EntertainmentContentProvider {
     private static final String TOP = "top";
     private static final String VOTES = "votes";
     private static final String SHORT_MOVIES = "short_movies";
-    
+
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private EntertainmentLoadedCallbacks entertainmentLoadedCallbacks;
-    
+
     public EntertainmentContentProvider(EntertainmentLoadedCallbacks entertainmentLoadedCallbacks) {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         this.entertainmentLoadedCallbacks = entertainmentLoadedCallbacks;
     }
-    
+
     public void loadEntertainmentPack() {
         loadFeaturedVideos();
         loadTopMovies();
@@ -47,7 +45,7 @@ public class EntertainmentContentProvider {
         loadTopComedyScenes();
         loadLatestShortMovies();
     }
-    
+
     private void loadFeaturedVideos() {
         databaseReference.child(ENTERTAINMENT).child(FEATURED).child(VIDEOS).addValueEventListener(new ValueEventListener() {
             @Override
@@ -58,7 +56,7 @@ public class EntertainmentContentProvider {
                         try {
                             SimpleVideo featuredVideo = videoSnapshot.getValue(SimpleVideo.class);
                             featuredVideos.add(featuredVideo);
-                            
+
                             //logging data
                             Log.d(TAG, "title - " + featuredVideo.getTitle());
                             Log.d(TAG, "id - " + featuredVideo.getId());
@@ -74,14 +72,14 @@ public class EntertainmentContentProvider {
                     throw new NullPointerException("callback instance is NULL");
                 }
             }
-            
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-            
+
             }
         });
     }
-    
+
     private void loadTopMovies() {
         databaseReference.child(ENTERTAINMENT).child(MOVIES).child(TOP).addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,7 +90,7 @@ public class EntertainmentContentProvider {
                         try {
                             SimpleVideo featuredVideo = videoSnapshot.getValue(SimpleVideo.class);
                             topMovies.add(featuredVideo);
-                            
+
                             //logging data
                             Log.d(TAG, "title - " + featuredVideo.getTitle());
                             Log.d(TAG, "id - " + featuredVideo.getId());
@@ -108,14 +106,14 @@ public class EntertainmentContentProvider {
                     throw new NullPointerException("callback instance is NULL");
                 }
             }
-            
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-            
+
             }
         });
     }
-    
+
     private void loadLatestTrailers() {
         databaseReference.child(ENTERTAINMENT).child(TRAILERS).child(TOP).addValueEventListener(new ValueEventListener() {
             @Override
@@ -126,7 +124,7 @@ public class EntertainmentContentProvider {
                         try {
                             SimpleVideo featuredVideo = videoSnapshot.getValue(SimpleVideo.class);
                             latestTrailers.add(featuredVideo);
-                            
+
                             //logging data
                             Log.d(TAG, "title - " + featuredVideo.getTitle());
                             Log.d(TAG, "id - " + featuredVideo.getId());
@@ -142,14 +140,14 @@ public class EntertainmentContentProvider {
                     throw new NullPointerException("callback instance is NULL");
                 }
             }
-            
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-            
+
             }
         });
     }
-    
+
     private void loadLatestShortMovies() {
         databaseReference.child(ENTERTAINMENT).child(SHORT_MOVIES).child(TOP).addValueEventListener(new ValueEventListener() {
             @Override
@@ -160,7 +158,7 @@ public class EntertainmentContentProvider {
                         try {
                             SimpleVideo featuredVideo = videoSnapshot.getValue(SimpleVideo.class);
                             topShortMovies.add(featuredVideo);
-                            
+
                             //logging data
                             Log.d(TAG, "title - " + featuredVideo.getTitle());
                             Log.d(TAG, "id - " + featuredVideo.getId());
@@ -176,14 +174,14 @@ public class EntertainmentContentProvider {
                     throw new NullPointerException("callback instance is NULL");
                 }
             }
-            
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-            
+
             }
         });
     }
-    
+
     private void loadTopComedyScenes() {
         databaseReference.child(ENTERTAINMENT).child(COMEDY).child(TOP).addValueEventListener(new ValueEventListener() {
             @Override
@@ -194,7 +192,7 @@ public class EntertainmentContentProvider {
                         try {
                             SimpleVideo featuredVideo = videoSnapshot.getValue(SimpleVideo.class);
                             topComedyScenes.add(featuredVideo);
-                            
+
                             //logging data
                             Log.d(TAG, "title - " + featuredVideo.getTitle());
                             Log.d(TAG, "id - " + featuredVideo.getId());
@@ -210,14 +208,14 @@ public class EntertainmentContentProvider {
                     throw new NullPointerException("callback instance is NULL");
                 }
             }
-            
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-            
+
             }
         });
     }
-    
+
     private void loadTopSongs() {
         databaseReference.child(ENTERTAINMENT).child(SONGS).child(TOP).addValueEventListener(new ValueEventListener() {
             @Override
@@ -228,7 +226,7 @@ public class EntertainmentContentProvider {
                         try {
                             SimpleVideo featuredVideo = videoSnapshot.getValue(SimpleVideo.class);
                             topSongs.add(featuredVideo);
-                            
+
                             //logging data
                             Log.d(TAG, "title - " + featuredVideo.getTitle());
                             Log.d(TAG, "id - " + featuredVideo.getId());
@@ -244,40 +242,36 @@ public class EntertainmentContentProvider {
                     throw new NullPointerException("callback instance is NULL");
                 }
             }
-            
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-            
+
             }
         });
     }
-    
-    public void updateVotes(EntertainmentType entertainmentType, final SimpleVideo simpleVideo) {
+
+    public void addVideo(EntertainmentType entertainmentType, SimpleVideo simpleVideo) {
         databaseReference = getDatabaseReferenceFor(entertainmentType);
+        DatabaseReference videoReference;
         if (databaseReference != null) {
-            String jsonObjectParent = getJsonObjectParentFor(simpleVideo);
-            databaseReference.child(jsonObjectParent).child(VOTES).setValue(simpleVideo.getVotes() + 1)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "Count updated successfully");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e(TAG, "Count updated failure " + e.getMessage());
-                }
-            });
+            videoReference = databaseReference.child(simpleVideo.getId());
+            videoReference.child("title").setValue(simpleVideo.getTitle());
+            videoReference.child("video_type").setValue(simpleVideo.getVideo_type());
+            videoReference.child("votes").setValue(simpleVideo.getVotes());
+            videoReference.child("id").setValue(simpleVideo.getId());
+            videoReference.child("sort_count").setValue(simpleVideo.getSort_count());
+            videoReference.child("thumbnail_url").setValue(simpleVideo.getThumbnail_url());
         }
     }
-    
+
+
     private String getJsonObjectParentFor(SimpleVideo simpleVideo) {
         if (simpleVideo.getVideo_type().equals(VideoType.YOUTUBE.getVideoType()))
             return simpleVideo.getId();
         else
             return simpleVideo.getId().replaceAll("[^A-Za-z0-9]", "");
     }
-    
+
     private DatabaseReference getDatabaseReferenceFor(EntertainmentType entertainmentType) {
         switch (entertainmentType) {
             case MOVIE:
@@ -296,7 +290,7 @@ public class EntertainmentContentProvider {
                 return null;
         }
     }
-    
+
     public ArrayList<SimpleVideo> getDummyList() {
         ArrayList<SimpleVideo> simpleYouTubeVideos = new ArrayList<>();
         SimpleVideo simpleYouTubeVideo = new SimpleVideo("Ovq4k8L2YO0", "Kolar Gold Fields \n(trailer)");
@@ -305,14 +299,14 @@ public class EntertainmentContentProvider {
         SimpleVideo simpleYouTubeVideo3 = new SimpleVideo("Ovq4k8L2YO0", "Kolar Gold Fields \n(trailer)");
         SimpleVideo simpleYouTubeVideo4 = new SimpleVideo("osAKnebiPSo", "Tequila \n(party song)");
         SimpleVideo simpleYouTubeVideo5 = new SimpleVideo("ydwqn9s400s", "Edeyolage guitaru \n(song)");
-        
+
         simpleYouTubeVideos.add(simpleYouTubeVideo);
         simpleYouTubeVideos.add(simpleYouTubeVideo1);
         simpleYouTubeVideos.add(simpleYouTubeVideo2);
         simpleYouTubeVideos.add(simpleYouTubeVideo3);
         simpleYouTubeVideos.add(simpleYouTubeVideo4);
         simpleYouTubeVideos.add(simpleYouTubeVideo5);
-        
+
         return simpleYouTubeVideos;
     }
 }

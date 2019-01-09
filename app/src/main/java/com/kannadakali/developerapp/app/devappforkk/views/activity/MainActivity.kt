@@ -121,19 +121,19 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
     private val entertainmentClickObserver =
         Observer<EntertainmentType> {
             when (it) {
-                EntertainmentType.COMEDY -> launchListFragment(comedyScenesList!!)
-                EntertainmentType.SONGS -> launchListFragment(songsList!!)
-                EntertainmentType.SHORT_MOVIES -> launchListFragment(shortMoviesList!!)
-                EntertainmentType.FEATURED -> launchListFragment(featuredVideosList!!)
-                EntertainmentType.TRAILERS -> launchListFragment(trailersList!!)
-                EntertainmentType.MOVIE -> launchListFragment(moviesList!!)
+                EntertainmentType.COMEDY -> launchListFragment(EntertainmentType.COMEDY, comedyScenesList!!)
+                EntertainmentType.SONGS -> launchListFragment(EntertainmentType.SONGS, songsList!!)
+                EntertainmentType.SHORT_MOVIES -> launchListFragment(EntertainmentType.SHORT_MOVIES, shortMoviesList!!)
+                EntertainmentType.FEATURED -> launchListFragment(EntertainmentType.FEATURED, featuredVideosList!!)
+                EntertainmentType.TRAILERS -> launchListFragment(EntertainmentType.TRAILERS, trailersList!!)
+                EntertainmentType.MOVIE -> launchListFragment(EntertainmentType.MOVIE, moviesList!!)
                 else ->
                     Toast.makeText(ThisApplication.getContext(), "Not available", Toast.LENGTH_LONG).show()
             }
         }
 
-    private fun launchListFragment(videosList: ArrayList<SimpleVideo>) {
-        entertainmentListFragment = EntertainmentListFragment.newInstance(videosList)
+    private fun launchListFragment(entertainmentType: EntertainmentType, videosList: ArrayList<SimpleVideo>) {
+        entertainmentListFragment = EntertainmentListFragment.newInstance(entertainmentType, videosList)
         supportFragmentManager.beginTransaction()
             .replace(R.id.full_screen_container_id, entertainmentListFragment!!)
             .addToBackStack(null)

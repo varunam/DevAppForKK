@@ -4,7 +4,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <Button
+            android:id="@+id/add_video_button_id"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_margin="10dp"
+            android:text="@string/add"
+            android:textColor="@color/white"
+            android:fontFamily="@font/muli_extrabold"/>
+
     <android.support.v7.widget.RecyclerView
+            android:layout_below="@id/add_video_button_id"
             android:id="@+id/recycler_view_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
