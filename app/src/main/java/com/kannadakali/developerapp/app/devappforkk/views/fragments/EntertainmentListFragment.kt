@@ -161,6 +161,7 @@ class EntertainmentListFragment : Fragment(), View.OnClickListener, VideoClickCa
     override fun onVideoLongClicked(simpleVideo: SimpleVideo) {
         AlertDialog.Builder(activity!!)
             .setTitle("Delete video?")
+            .setIcon(R.drawable.error_red_icon)
             .setMessage("Are you sure to delete this video from database? \n\nNote: This will delete video from production environment!")
             .setCancelable(false)
             .setPositiveButton("Yes", object : DialogInterface.OnClickListener {
