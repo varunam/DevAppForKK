@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.kannadakali.developerapp.app.devappforkk.R
 import com.kannadakali.developerapp.app.devappforkk.ThisApplication
 import com.kannadakali.developerapp.app.devappforkk.data.firebase.EntertainmentContentProvider
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
 
         init()
         launchHomeFragment()
