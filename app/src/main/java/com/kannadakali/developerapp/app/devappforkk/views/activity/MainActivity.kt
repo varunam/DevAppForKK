@@ -1,11 +1,14 @@
 package com.kannadakali.developerapp.app.devappforkk.views.activity
 
+
 import android.app.ProgressDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -43,6 +46,8 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
     private var shortMoviesLoaded = false
     private var trailersLoaded = false
 
+    private var actionBar: ActionBar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -72,6 +77,8 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
     }
 
     private fun init() {
+        actionBar = supportActionBar
+        actionBar!!.title = "KK-E Controller"
         entertainmentContentProvider = EntertainmentContentProvider(this)
         entertainmentViewModel = ViewModelProviders.of(this).get(EntertainmentViewModel::class.java)
         entertainmentViewModel!!.entertainmentClicked.observe(this, entertainmentClickObserver)
@@ -137,6 +144,8 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
 
     private fun launchListFragment(entertainmentType: EntertainmentType, videosList: ArrayList<SimpleVideo>) {
         entertainmentListFragment = EntertainmentListFragment.newInstance(entertainmentType, videosList)
+        actionBar!!.title = entertainmentType.name
+        actionBar!!.setDisplayHomeAsUpEnabled(true)
         supportFragmentManager.beginTransaction()
             .replace(R.id.full_screen_container_id, entertainmentListFragment!!)
             .setCustomAnimations(R.anim.from_bottom, R.anim.exit_to_top, R.anim.from_bottom, R.anim.exit_to_top)
@@ -155,6 +164,20 @@ class MainActivity : AppCompatActivity(), EntertainmentLoadedCallbacks {
             if (progressDialog!!.isShowing)
                 progressDialog!!.dismiss()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item!!.itemId == android.R.id.home) {
+            onBackPressed()
+            actionBar!!.setDisplayHomeAsUpEnabled(false)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (entertainmentListFragment!!.isVisible && entertainmentListFragment!!.isAdded)
+            actionBar!!.title = "KK-E Controller"
+        super.onBackPressed()
     }
 
 }

@@ -177,6 +177,7 @@ class EntertainmentListFragment : Fragment(), View.OnClickListener, VideoClickCa
 
         val titleEt = view.findViewById<EditText>(R.id.title_et_id)
         val videoIdEt = view.findViewById<EditText>(R.id.video_url_et_id)
+        videoIdEt.isEnabled = false
         val thumbnailUrlEt = view.findViewById<EditText>(R.id.thumbnail_url_et_id)
         val sortCountEt = view.findViewById<EditText>(R.id.sort_count_et_id)
         val viewsEt = view.findViewById<EditText>(R.id.views_et_id)
